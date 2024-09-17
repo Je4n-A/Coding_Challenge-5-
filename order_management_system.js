@@ -27,11 +27,11 @@
 
 const orders = [];
 
-function Customername(name, order) {        //Create a Customer Object
+function Customer(name, order) {        //Create a Customer Object
     this.name = name;
     this.order = order;
     this.items = order.map(item => ({ name: item.name, quantity: item.quantity }));
-    this.status = "Pending" || "Completed";
+    this.status = "Pending";
 }
 
 // Create a function to Place an Order 
@@ -46,7 +46,8 @@ function placeOrder(name, order) {
         let product = inventory.find(product => product.name === item.name);
         product.quantity -= item.quantity;
     }
-     const customer = new Customername(name, order);
+
+    const customer = new Customer(name, order);
     orders.push(customer);
     return "Order placed successfully"; 
 
@@ -58,3 +59,11 @@ console.log(placeOrder("John Doe", [
 console.log(orders);
 console.log(inventory);
 
+// Create a Function to Calculate Total for an Order
+
+function calculateOrderTotal(order) {
+    return order.reduce((total, item) => {
+        let product = inventory.find(product => product.name === item.name);
+        return total + product.price * item.quantity;
+    }, 0);
+}
