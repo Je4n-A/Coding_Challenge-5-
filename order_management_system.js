@@ -23,7 +23,13 @@
     }
 ];
 
+//Create an Orders Array of Order Objects
 
+let orders = [];
 
-    
-
+function Customername(name, order) {        //Create a Customer Object
+    this.name = name;
+    this.order = order;
+    this.items = order.map(item => ({ name: item.name, quantity: item.quantity }));
+    this.status = "Pending" || "Completed";
+}
