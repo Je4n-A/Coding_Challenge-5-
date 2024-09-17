@@ -1,6 +1,6 @@
 //Create an inventory Array of Product Objects
 
- let inventory = [
+ const inventory = [
     {
         name: "coffee",
         price: 2.50,
@@ -25,7 +25,7 @@
 
 //Create an Orders Array of Order Objects
 
-let orders = [];
+const orders = [];
 
 function Customername(name, order) {        //Create a Customer Object
     this.name = name;
@@ -33,3 +33,28 @@ function Customername(name, order) {        //Create a Customer Object
     this.items = order.map(item => ({ name: item.name, quantity: item.quantity }));
     this.status = "Pending" || "Completed";
 }
+
+// Create a function to Place an Order 
+function placeOrder(name, order) {
+    for (let item of order) {
+        let product = inventory.find(product => product.name === item.name);
+        if (!product || product.quantity < item.quantity) {
+            return "Order cannot be placed";
+        }
+    }
+    for (let item of order) {
+        let product = inventory.find(product => product.name === item.name);
+        product.quantity -= item.quantity;
+    }
+     const customer = new Customername(name, order);
+    orders.push(customer);
+    return "Order placed successfully"; 
+
+    }
+console.log(placeOrder("John Doe", [
+    { name: "coffee", quantity: 2 },
+    { name: "latte", quantity: 1 }
+    ]));
+console.log(orders);
+console.log(inventory);
+
