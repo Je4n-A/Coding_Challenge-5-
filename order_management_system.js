@@ -77,3 +77,8 @@ function completeOrder(customerName) {
     customer.status = "Completed";
     return "Order completed successfully";
 }
+
+//Create a Function to Check Pending Orders
+function checkPendingOrders(orders) {
+    return orders.filter(order => order.status === "Pending");
+}
