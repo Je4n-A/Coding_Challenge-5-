@@ -67,3 +67,13 @@ function calculateOrderTotal(order) {
         return total + product.price * item.quantity;
     }, 0);
 }
+
+//Create a Function to Mark an Order as Completed
+function completeOrder(customerName) {
+    let customer = orders.find(customer => customer.name === customerName);
+    if (!customer) {
+        return "Customer not found";
+    }
+    customer.status = "Completed";
+    return "Order completed successfully";
+}
