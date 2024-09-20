@@ -27,13 +27,6 @@
 
 const orders = [];
 
-function Customer(name, order) {        //Create a Customer Object
-    this.name = name;
-    this.order = order;
-    this.items = order.map(item => ({ name: item.name, quantity: item.quantity }));
-    this.status = "Pending";
-}
-
 // Create a function to Place an Order 
 function placeOrder(name, order) {
     for (let item of order) {
@@ -64,18 +57,22 @@ console.log(inventory);
 function calculateOrderTotal(order) {
     return order.reduce((total, item) => {
         let product = inventory.find(product => product.name === item.name);
+        if (!product) {
+            console.error(`Product ${item.name} not found in inventory`);
+            return total;
+        }
         return total + product.price * item.quantity;
     }, 0);
 }
 
 //Create a Function to Mark an Order as Completed
 function completeOrder(customerName) {
-    let customer = orders.find(customer => customer.name === customerName);
-    if (!customer) {
+    let customerOrders = orders.filter(customer => customer.name === customerName);
+    if (customerOrders.length === 0) {
         return "Customer not found";
     }
-    customer.status = "Completed";
-    return "Order completed successfully";
+    customerOrders.forEach(order => order.status = "Completed");
+    return "Order(s) completed successfully";
 }
 
 //Create a Function to Check Pending Orders
